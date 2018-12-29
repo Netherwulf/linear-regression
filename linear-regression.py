@@ -1,4 +1,3 @@
-import pandas as pd
 import quandl
 import math
 import datetime
@@ -8,7 +7,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 from matplotlib import style
+import pickle
 
+# setting the style of the plot
 style.use('ggplot')
 
 # initialization of data set - getting the data from Quandl server
@@ -59,14 +60,22 @@ y = np.array(df['label'])
 # creating training set of records and testing set of records
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-# initialization of the classifier
-clf = LinearRegression(n_jobs=-1)
+# # initialization of the classifier
+# clf = LinearRegression(n_jobs=-1)
 
 # alternative usage of Support Vector Regression - in this case it has given worse accuracy than linear regression
 # clf = svm.SVR()
 
-# fitting the model to the data
-clf.fit(X_train, y_train)
+# # fitting the model to the data
+# clf.fit(X_train, y_train)
+#
+# # saving classifier to pickle
+# with open('linearregression.pickle', 'wb') as f:
+#     pickle.dump(clf, f)
+
+# loading classifier saved in pickle
+pickle_in = open('linearregression.pickle', 'rb')
+clf = pickle.load(pickle_in)
 
 # testing the accuracy of the model
 accuracy = clf.score(X_test, y_test)
